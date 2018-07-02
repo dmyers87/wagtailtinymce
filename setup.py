@@ -45,7 +45,7 @@ install_requires = [
 
 
 setup(
-    name='wagtailtinymce',
+    name='zebra_wagtailtinymce',
     version='4.2.1.6.dev0',
     description='A TinyMCE editor integration for Wagtail',
     author='Richard Mitchell',
