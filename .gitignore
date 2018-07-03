@@ -5,3 +5,4 @@
 /local
 /.tx
 /translations
+*.DS_Store
