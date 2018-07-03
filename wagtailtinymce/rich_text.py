@@ -98,7 +98,7 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
                 kwargs['menubar'] = ' '.join(self.kwargs['menus'])
 
         if 'passthru_init_keys' in self.kwargs:
-+            kwargs.update(self.kwargs['passthru_init_keys'])
+            kwargs.update(self.kwargs['passthru_init_keys'])
 
         return "makeTinyMCEEditable({0}, {1});".format(json.dumps(id_), json.dumps(kwargs))
 
