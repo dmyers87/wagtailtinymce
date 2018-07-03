@@ -86,7 +86,7 @@ def images_richtexteditor_js():
     return format_html(
         """
         <script>
-            registerMCEPlugin("wagtailimage", {}, {});
+            registerMCEExternalPlugin("wagtailimage", {}, {});
             window.chooserUrls.imageChooserSelectFormat = {};
         </script>
         """,
@@ -101,7 +101,7 @@ def embeds_richtexteditor_js():
     return format_html(
         """
         <script>
-            registerMCEPlugin("wagtailembeds", {}, {});
+            registerMCEExternalPlugin("wagtailembeds", {}, {});
         </script>
         """,
         to_js_primitive(static('wagtailtinymce/js/tinymce-plugins/wagtailembeds.js')),
@@ -114,7 +114,7 @@ def links_richtexteditor_js():
     return format_html(
         """
         <script>
-            registerMCEPlugin("wagtaillink", {}, {});
+            registerMCEExternalPlugin("wagtaillink", {}, {});
         </script>
         """,
         to_js_primitive(static('wagtailtinymce/js/tinymce-plugins/wagtaillink.js')),
@@ -127,7 +127,7 @@ def docs_richtexteditor_js():
     return format_html(
         """
         <script>
-            registerMCEPlugin("wagtaildoclink", {}, {});
+            registerMCEExternalPlugin("wagtaildoclink", {}, {});
         </script>
         """,
         to_js_primitive(static('wagtailtinymce/js/tinymce-plugins/wagtaildoclink.js')),

@@ -37,33 +37,9 @@ from wagtail.wagtailcore.rich_text import expand_db_html
 
 class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
 
-    @classmethod
-    def getDefaultArgs(cls):
-        return {
-            'buttons': [
-                [
-                    ['undo', 'redo'],
-                    ['styleselect'],
-                    ['bold', 'italic'],
-                    ['bullist', 'numlist', 'outdent', 'indent'],
-                    ['table'],
-                    ['link', 'unlink'],
-                    ['wagtaildoclink', 'wagtailimage', 'wagtailembed'],
-                    ['pastetext', 'fullscreen'],
-                ]
-            ],
-            'menus': False,
-            'options': {
-                'browser_spellcheck': True,
-                'noneditable_leave_contenteditable': True,
-                'language': translation.to_locale(translation.get_language()),
-                'language_load': True,
-            },
-        }
-
     def __init__(self, attrs=None, **kwargs):
         super(TinyMCERichTextArea, self).__init__(attrs)
-        self.kwargs = self.getDefaultArgs()
+        self.kwargs = {}
         if kwargs is not None:
             self.kwargs.update(kwargs)
 
@@ -78,27 +54,9 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
         return super(TinyMCERichTextArea, self).render(name, translated_value, attrs)
 
     def render_js_init(self, id_, name, value):
-        kwargs = {
-            'options': self.kwargs.get('options', {}),
-        }
-
-        if 'buttons' in self.kwargs:
-            if self.kwargs['buttons'] is False:
-                kwargs['toolbar'] = False
-            else:
-                kwargs['toolbar'] = [
-                    ' | '.join([' '.join(groups) for groups in rows])
-                    for rows in self.kwargs['buttons']
-                ]
-
-        if 'menus' in self.kwargs:
-            if self.kwargs['menus'] is False:
-                kwargs['menubar'] = False
-            else:
-                kwargs['menubar'] = ' '.join(self.kwargs['menus'])
-
-        if 'passthru_init_keys' in self.kwargs:
-            kwargs.update(self.kwargs['passthru_init_keys'])
+        kwargs = {}
+        if 'tinymce_config' in self.kwargs:
+            kwargs.update(self.kwargs['tinymce_config'])
 
         return "makeTinyMCEEditable({0}, {1});".format(json.dumps(id_), json.dumps(kwargs))
 

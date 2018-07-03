@@ -27,18 +27,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 'use strict';
 
-var mcePlugins = ['hr', 'code', 'fullscreen', 'noneditable', 'paste', 'table'],
-    mceTools = ['inserttable'],
-    mceExternalPlugins = {};
+var mceExternalPlugins = {};
 
-function registerMCEPlugin(name, path, language) {
+function registerMCEExternalPlugin(name, path, language) {
     if (path) {
         mceExternalPlugins[name] = path;
         if (language) {
             tinymce.PluginManager.requireLangPack(name, language);
         }
-    } else {
-        mcePlugins.push(name);
     }
 }
 
@@ -51,10 +47,7 @@ function makeTinyMCEEditable(id, kwargs) {
     kwargs = kwargs || {};
     $.extend(kwargs, {
         selector: '#' + id.toString(),
-        plugins: mcePlugins,
-        tools: mceTools,
         external_plugins: mceExternalPlugins,
-        branding: false,
         setup: function (editor) {
             editor.on('change', function () {
                 editor.save();
