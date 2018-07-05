@@ -28,7 +28,6 @@ from __future__ import absolute_import, unicode_literals
 import json
 
 from django.forms import widgets
-from django.utils import translation
 from wagtail.utils.widgets import WidgetWithScript
 from wagtail.wagtailadmin.edit_handlers import RichTextFieldPanel
 from wagtail.wagtailcore.rich_text import DbWhitelister
@@ -37,9 +36,17 @@ from wagtail.wagtailcore.rich_text import expand_db_html
 
 class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
 
+    @classmethod
+    def getDefaultConfig(cls):
+        return {
+            'toolbar': 'undo redo | styleselect | bold italic | bullist numlist outdent indent | table| link unlink | wagtaildoclink wagtailimage wagtailembed | pastetext fullscreen | removeformat',
+            'menubar': False,
+            'browser_spellcheck': True
+        }
+
     def __init__(self, attrs=None, **kwargs):
         super(TinyMCERichTextArea, self).__init__(attrs)
-        self.kwargs = {}
+        self.kwargs = {'tinymce_config': self.getDefaultConfig()}
         if kwargs is not None:
             self.kwargs.update(kwargs)
 
@@ -54,11 +61,11 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
         return super(TinyMCERichTextArea, self).render(name, translated_value, attrs)
 
     def render_js_init(self, id_, name, value):
-        kwargs = {}
+        tinyMCEConfig = {}
         if 'tinymce_config' in self.kwargs:
-            kwargs.update(self.kwargs['tinymce_config'])
+            tinyMCEConfig.update(self.kwargs['tinymce_config'])
 
-        return "makeTinyMCEEditable({0}, {1});".format(json.dumps(id_), json.dumps(kwargs))
+        return "makeTinyMCEEditable({0}, {1});".format(json.dumps(id_), json.dumps(tinyMCEConfig))
 
     def value_from_datadict(self, data, files, name):
         original_value = super(TinyMCERichTextArea, self).value_from_datadict(data, files, name)

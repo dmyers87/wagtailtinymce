@@ -42,10 +42,10 @@ function registerMCETool(name) {
     mceTools.push(name);
 }
 
-function makeTinyMCEEditable(id, kwargs) {
+function makeTinyMCEEditable(id, tinyMCEConfig) {
 
-    kwargs = kwargs || {};
-    $.extend(kwargs, {
+    tinyMCEConfig = tinyMCEConfig || {};
+    $.extend(tinyMCEConfig, {
         selector: '#' + id.toString(),
         external_plugins: mceExternalPlugins,
         setup: function (editor) {
@@ -55,5 +55,5 @@ function makeTinyMCEEditable(id, kwargs) {
         }
     });
 
-    tinymce.init(kwargs);
+    tinymce.init(tinyMCEConfig);
 }
