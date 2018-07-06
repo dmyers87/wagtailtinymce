@@ -31,7 +31,7 @@ For example, to use TinyMCE for all ``RichTextField`` and ``RichTextBlock`` inst
 Or, to use TinyMCE for certain instances...
 
 .. code-block:: python
-    
+
     WAGTAILADMIN_RICH_TEXT_EDITORS = {
         'default': {
             'WIDGET': 'wagtail.wagtailadmin.rich_text.HalloRichTextArea'
@@ -40,70 +40,50 @@ Or, to use TinyMCE for certain instances...
             'WIDGET': 'wagtailtinymce.rich_text.TinyMCERichTextArea'
         },
     }
-    
+
 ...and declare fields with the corresponding key in the ``editor`` parameter:
 
 .. code-block:: python
 
     html_field = RichTextField(editor='tinymce', ...)
     stream_field = StreamField([('html', RichTextBlock(editor='tinymce', ...)), ...])
-    
+
 TinyMCE configuration
-===================== 
+=====================
 
-The ``TinyMCERichTextArea`` constructor accepts keyword arguments for buttons, menus and options which are merged with defaults and passed to TinyMCE. 
+Wagtail does not currently allow for passing parameters to the TinyMCERichTextArea constructor. To change the configuration you must create and register a subclass of ``TinyMCERichTextArea`` and pass these parameters or amend defaults in the subclass constructor.
 
-However, Wagtail does not currently allow for passing parameters to this constructor. To change the configuration you must create and register a subclass of ``TinyMCERichTextArea`` and pass these parameters or amend defaults in the subclass constructor.
+The default configuration for WagtailTinyMCE is:
 
-Buttons
--------
+.. code-block:: javascript
+    {
+        'browser_spellcheck': True,
+        'menubar': False,
+        'plugins': 'hr code fullscreen noneditable paste table',
+        'toolbar': 'undo redo | styleselect | bold italic | bullist numlist outdent indent | table| link unlink | wagtaildoclink wagtailimage wagtailembed | pastetext fullscreen | removeformat',
+        'tools': 'inserttable',
+    }
 
-These are configured as a list of menu bars, each containing a list of groups, each containing a list of button names.
+Additional configuration options for can be found in the TinyMCE documentation: https://www.tinymce.com/docs/
 
-By default, TinyMCE is loaded with buttons for undo/redo, a styles dropdown, bold/italic, lists and tables, link/unlink, Wagtail documents/images/embeds, paste filter toggle and edit fullscreen.
-
-Menu
-----
-
-These are configured as a list of menu names.
-
-By default, TinyMCE is loaded with no menubar.
-
-Options
--------
-
-This is a dict. By default, TinyMCE is loaded with the following options set:
-
-- ``browser_spellcheck``
-- ``noneditable_leave_contenteditable`` (required for Wagtail image/embed handling)
-- ``language`` (taken from Django settings)
-- ``language_load``
 
 TinyMCE plugins and tools
-========================= 
+=========================
 
-TinyMCE is loaded with the following plugins:
 
-- ``hr``
-- ``code``
-- ``fullscreen``
-- ``noneditable`` (required for Wagtail image/embed handling)
-- ``paste``
-- ``table`` (and ``inserttable`` tool)
-
-To add further plugins and tools to TinyMCE, use the
+To add external plugins and tools to TinyMCE, use the
 ``insert_tinymce_js`` and ``insert_tinymce_css`` hooks. Once you have the hook in place use the
 following JavaScript to register the plugin with TinyMCE:
 
 .. code-block:: javascript
 
-    registerMCEPlugin(name, path, language);
+    registerMCEExternalPlugin(name, path, language);
 
 For example:
 
 .. code-block:: javascript
 
-    registerMCEPlugin('myplugin', '/static/js/my-tinymce-plugin.js', 'en_GB');
+    registerMCEExternalPlugin('myplugin', '/static/js/my-tinymce-plugin.js', 'en_GB');
 
 The ``language`` parameter is optional and can be omitted.
 
@@ -130,6 +110,16 @@ A complete ``wagtail_hooks.py`` file example:
             mark_safe(json.dumps(static('js/my-tinymce-plugin.js'))),
             to_js_primitive(translation.to_locale(translation.get_language())),
         )
+
+How to upgrade TinyMCE
+======================
+
+1. Clone [TinyMCE](https://github.com/tinymce/tinymce) repo in a different folder.
+1. Follow the instructions on this repo to build it using Grunt.
+1. As of version 4.6.4, a `/js` folder will be generated in the root of the TinyMCE repo.
+Copy its contents to `wagtailtinymce/wagtailtinymce/static/wagtailtinymce/js/vendor`, replacing the contents of this folder.
+1. Create a new branch with the versioning instructions below so that this new version is accessible with `pip`.
+The branch for the version `4.6.4` is `TinyMCE4.6.4`.
 
 Versioning
 ==========
