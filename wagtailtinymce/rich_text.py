@@ -39,9 +39,11 @@ class TinyMCERichTextArea(WidgetWithScript, widgets.Textarea):
     @classmethod
     def getDefaultConfig(cls):
         return {
-            'toolbar': 'undo redo | styleselect | bold italic | bullist numlist outdent indent | table| link unlink | wagtaildoclink wagtailimage wagtailembed | pastetext fullscreen | removeformat',
+            'browser_spellcheck': True,
             'menubar': False,
-            'browser_spellcheck': True
+            'plugins': 'hr code fullscreen noneditable paste table',
+            'toolbar': 'undo redo | styleselect | bold italic | bullist numlist outdent indent | table| link unlink | wagtaildoclink wagtailimage wagtailembed | pastetext fullscreen | removeformat',
+            'tools': 'inserttable',
         }
 
     def __init__(self, attrs=None, **kwargs):

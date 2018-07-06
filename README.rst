@@ -51,65 +51,39 @@ Or, to use TinyMCE for certain instances...
 TinyMCE configuration
 =====================
 
-The ``TinyMCERichTextArea`` constructor accepts keyword arguments for buttons, menus and options which are merged with defaults and passed to TinyMCE.
+Wagtail does not currently allow for passing parameters to the TinyMCERichTextArea constructor. To change the configuration you must create and register a subclass of ``TinyMCERichTextArea`` and pass these parameters or amend defaults in the subclass constructor.
 
-However, Wagtail does not currently allow for passing parameters to this constructor. To change the configuration you must create and register a subclass of ``TinyMCERichTextArea`` and pass these parameters or amend defaults in the subclass constructor.
+The default configuration for WagtailTinyMCE is:
 
-Buttons
--------
+.. code-block:: javascript
+    {
+        'browser_spellcheck': True,
+        'menubar': False,
+        'plugins': 'hr code fullscreen noneditable paste table',
+        'toolbar': 'undo redo | styleselect | bold italic | bullist numlist outdent indent | table| link unlink | wagtaildoclink wagtailimage wagtailembed | pastetext fullscreen | removeformat',
+        'tools': 'inserttable',
+    }
 
-These are configured as a list of menu bars, each containing a list of groups, each containing a list of button names.
+Additional configuration options for can be found in the TinyMCE documentation: https://www.tinymce.com/docs/
 
-By default, TinyMCE is loaded with buttons for undo/redo, a styles dropdown, bold/italic, lists and tables, link/unlink, Wagtail documents/images/embeds, paste filter toggle and edit fullscreen.
-
-Menu
-----
-
-These are configured as a list of menu names.
-
-By default, TinyMCE is loaded with no menubar.
-
-Options
--------
-
-This is a dict. By default, TinyMCE is loaded with the following options set:
-
-- ``browser_spellcheck``
-- ``noneditable_leave_contenteditable`` (required for Wagtail image/embed handling)
-- ``language`` (taken from Django settings)
-- ``language_load``
-
-TinyMCE Init Passthru
----------------------
-
-To pass any additional keys to the ``init()`` function of TinyMCE (`see the TinyMCE docs <https://www.tinymce.com/docs/configure/>`_),
-set the ``passthru_init_keys`` keyword arg to a dictionary of options.
 
 TinyMCE plugins and tools
 =========================
 
-TinyMCE is loaded with the following plugins:
 
-- ``hr``
-- ``code``
-- ``fullscreen``
-- ``noneditable`` (required for Wagtail image/embed handling)
-- ``paste``
-- ``table`` (and ``inserttable`` tool)
-
-To add further plugins and tools to TinyMCE, use the
+To add external plugins and tools to TinyMCE, use the
 ``insert_tinymce_js`` and ``insert_tinymce_css`` hooks. Once you have the hook in place use the
 following JavaScript to register the plugin with TinyMCE:
 
 .. code-block:: javascript
 
-    registerMCEPlugin(name, path, language);
+    registerMCEExternalPlugin(name, path, language);
 
 For example:
 
 .. code-block:: javascript
 
-    registerMCEPlugin('myplugin', '/static/js/my-tinymce-plugin.js', 'en_GB');
+    registerMCEExternalPlugin('myplugin', '/static/js/my-tinymce-plugin.js', 'en_GB');
 
 The ``language`` parameter is optional and can be omitted.
 
