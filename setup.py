@@ -45,12 +45,12 @@ install_requires = [
 
 
 setup(
-    name='wagtailtinymce',
-    version='4.7.13.1.dev0',
+    name='thezebra-wagtailtinymce',
+    version='4.7.13.2',
     description='A TinyMCE editor integration for Wagtail',
-    author='Richard Mitchell',
-    author_email='richard.mitchell@isotoma.com',
-    url='https://github.com/isotoma/wagtailtinymce.git',
+    author='Dustin Hlava',
+    author_email='dhlava@thezebra.com',
+    url='https://github.com/insurancezebra/wagtailtinymce/.git',
     packages=find_packages(),
     include_package_data=True,
     license='New BSD',
