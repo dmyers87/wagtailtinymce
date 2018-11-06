@@ -136,9 +136,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 });
             }
 
-            editor.addButton('link', {
+            editor.addButton('wagtailink', {
                 icon: 'link',
-                tooltip: 'Insert/edit link',
+                tooltip: 'Insert/edit Wagtail link',
                 shortcut: 'Meta+K',
                 onclick: showDialog,
                 stateSelector: 'a[data-linktype=page],a[href]:not([data-linktype])'
@@ -151,9 +151,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 stateSelector: 'a[data-linktype=page],a[href]'
             });
 
-            editor.addMenuItem('link', {
+            editor.addMenuItem('wagtaillink', {
                 icon: 'link',
-                text: 'Insert/edit link',
+                text: 'Insert/edit Wagtail link',
                 shortcut: 'Meta+K',
                 onclick: showDialog,
                 stateSelector: 'a[data-linktype=page],a[href]:not([data-linktype])',
