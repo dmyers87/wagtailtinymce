@@ -1,8 +1,20 @@
 Changes
 =======
 
+4.7.13.3
+--------------------
 
-4.7.13.1 (unreleased)
+- Change wagtaillink icon
+- Fix typo in wagtaillink naming
+
+
+4.7.13.2
+--------------------
+
+- Rename WagtailLink to 'wagtaillink' instead of 'link' 
+
+
+4.7.13.1
 --------------------
 
 - Upgrade TinyMCE to 4.7.13.

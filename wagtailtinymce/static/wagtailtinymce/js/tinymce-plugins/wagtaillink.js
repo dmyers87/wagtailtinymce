@@ -136,8 +136,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 });
             }
 
-            editor.addButton('wagtailink', {
-                icon: 'link',
+            editor.addButton('wagtaillink', {
+                icon: 'copy',
                 tooltip: 'Insert/edit Wagtail link',
                 shortcut: 'Meta+K',
                 onclick: showDialog,
@@ -152,7 +152,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             });
 
             editor.addMenuItem('wagtaillink', {
-                icon: 'link',
+                icon: 'copy',
                 text: 'Insert/edit Wagtail link',
                 shortcut: 'Meta+K',
                 onclick: showDialog,
