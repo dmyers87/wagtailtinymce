@@ -1,6 +1,13 @@
 Changes
 =======
 
+
+4.7.13.4
+--------------------
+
+- Add auto responsive table functionality
+
+
 4.7.13.3
 --------------------
 
