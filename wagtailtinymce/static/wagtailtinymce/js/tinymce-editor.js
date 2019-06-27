@@ -52,6 +52,32 @@ function makeTinyMCEEditable(id, tinyMCEConfig) {
             editor.on('change', function () {
                 editor.save();
             });
+            editor.on('BeforeSetContent', function (e) {
+                // Automatically wraps <table> elements with a <figure class="table-responsive"> element
+                if (e.content.indexOf("<table") == 0) {
+                    var domparser = new DOMParser();
+                    var doc = domparser.parseFromString(e.content, "text/html");
+                    var tables = doc.getElementsByTagName("table");
+
+                    for (var i = 0; i < tables.length; i++) {
+                        var table = tables[i];
+
+                        // only wrap if figure doesnt exist yet
+                        if (table.parentNode.tagName.toLowerCase() != "figure") {
+                            var wrapper = document.createElement('figure');
+                            var dummy = document.createElement('p');
+
+                            wrapper.classList.add('table-responsive');
+
+                            table.parentNode.insertBefore(wrapper, table);
+                            table.parentNode.insertBefore(dummy, table.nextSibling);
+
+                            wrapper.appendChild(table);
+                        }
+                    }
+                    e.content = doc.body.innerHTML;
+                }
+            });
         }
     });
 
